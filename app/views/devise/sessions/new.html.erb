@@ -1,0 +1,23 @@
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => 'form-signin'}) do |f| %>
+  <h1 class="h3 mb-3 font-weight-normal">Inicia session</h1>
+  <%= f.label :email, :class => 'sr-only' %>
+  <%= f.email_field :email, autofocus: true, autocomplete: "email", :placeholder => 'tu correo electronico (*)', :class => 'form-control' %>
+  <%= f.label :password, :class => 'sr-only' %>
+  <%= f.password_field :password, autocomplete: "current-password", :placeholder => 'tu clave (**)', :class => 'form-control' %>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="checkbox mb-3">
+      <%= f.label :remember_me %>
+      <%= f.check_box :remember_me %>
+    </div>
+  <% end -%>
+
+  <%= f.submit "Log in", :class => 'btn btn-lg btn-primary btn-block' %>
+<hr>
+<p class="small text-left">
+  (*) es el correo electronico con el cual te registraste en QTZL.<br/>
+  (**) no es la contrase&ntilde;a de tu correo electronico.
+</p>
+<% end %>
+

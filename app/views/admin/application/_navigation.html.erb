@@ -1,0 +1,29 @@
+<%#
+# Navigation
+
+This partial is used to display the navigation in Administrate.
+By default, the navigation contains navigation links
+for all resources in the admin dashboard,
+as defined by the routes in the `admin/` namespace
+%>
+<% if user_signed_in? %>
+<nav class="navigation nav flex-column" role="navigation">
+  <ul>
+    <li class="nav-item">
+      <a class="nav-link active" href="<%= admin_path %>">Inicio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="<%= admin_customers_path %>">Clientes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="<%= admin_activities_path %>">Actividades</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="<%= admin_invoices_path %>">Facturacion</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="<%= admin_customer_accesses_path %>">Accesos</a>
+    </li>
+  </ul>
+</nav>
+<% end %>

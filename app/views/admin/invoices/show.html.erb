@@ -1,0 +1,80 @@
+<%#
+# Show
+
+This view is the template for the show page.
+It renders the attributes of a resource,
+as well as a link to its edit page.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Show][1].
+  Contains methods for accessing the resource to be displayed on the page,
+  as well as helpers for describing how each attribute of the resource
+  should be displayed.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
+%>
+
+<% content_for(:title) { t("administrate.sections.invoice.show.header", name: page.resource.invoice_uid) } %>
+
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title">
+    <%= content_for(:title) %>
+  </h1>
+
+  <div>
+    <%= link_to(
+      t("administrate.actions.edit_resource", name: page.page_title),
+      [:edit, namespace, page.resource],
+      class: "btn btn-secondary",
+    ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
+  </div>
+</header>
+
+<section class="main-content__body">
+  <div class="container-fluid">
+    <hr>
+    <div class="row">
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Cliente</b><span><a href="<%= admin_customer_path(page.resource.customer) %>"><%= page.resource.customer.name %></a></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Fecha emision</b> <span><%= l(page.resource.created_at, :format => '%Y-%m-%d') %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Vencimiento</b><span><%= page.resource.due_date %></span></li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Estado</b><span><%= raw (page.resource.paid?) ? "<span class=\"badge badge-pill badge-success\">Pagada</span>":"<span class=\"badge badge-pill badge-danger\">Impago</span>" %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Vencida?</b> <%= raw (page.resource.paid?) ? "<span class=\"badge badge-pill badge-succees\">No</span>":"<span class=\"badge badge-pill badge-light\">Si</span>" %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Vencimiento</b><span><%= page.resource.due_date %></span></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-stripe">
+          <thead>
+            <tr>
+              <th>Contepto</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= page.resource.description %></td>
+              <td>$<%= page.resource.amount %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% if page.resource.paid? %>
+      <hr>
+      <div class="row">
+        factura pagada
+      </div>
+    <% end %>
+  </div>
+</section>

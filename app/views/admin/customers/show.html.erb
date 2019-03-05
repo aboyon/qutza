@@ -1,0 +1,127 @@
+<%#
+# Show
+
+This view is the template for the show page.
+It renders the attributes of a resource,
+as well as a link to its edit page.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Show][1].
+  Contains methods for accessing the resource to be displayed on the page,
+  as well as helpers for describing how each attribute of the resource
+  should be displayed.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
+%>
+
+<% content_for(:title) { t("administrate.actions.show_profile", name: page.resource.name) } %>
+
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title">
+    <%= content_for(:title) %>
+  </h1>
+  <div>
+    <%= link_to(
+      t("administrate.actions.edit_resource", name: page.page_title),
+      [:edit, namespace, page.resource],
+      class: "btn btn-secondary",
+    ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
+  </div>
+  <hr>
+</header>
+
+<section>
+  <div class="container-fluid">
+    <hr>
+    <div class="row">
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Fecha de alta</b><span><%= page.resource.joined_at %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Ultima modificacion</b> <span><%= page.resource.updated_at %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Email de contacto</b><span><%= page.resource.email %></span></li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <a href="javascript:;" class="btn btn-light btn-sm float-right" role="button" aria-pressed="true">Agregar actividad</a>
+            <b>Productos contratados</b>
+          </div>
+          <ul class="list-group list-group-flush">
+            <% page.resource.customer_activities.each do |customer_activity| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <%= customer_activity.activity.name %>
+                <span class="badge badge-dark badge-pill">$<%= customer_activity.amount %></span>
+              </li>
+            <% end %>
+            <li class='list-group-item list-group-item-<%= (page.resource.no_debts?) ? "success" : "danger"%>'><%= (page.resource.no_debts?) ? "Cliente al dia" : "Registra deuda" %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+        <h4>Facturacion ultimos 12 meses</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nro Factura</th>
+              <th>Concepto</th>
+              <th>Fecha emision</th>
+              <th>Fecha Vto</th>
+              <th>Estado</th>
+              <th class="text-right">Monto</th>
+              <th class="text-right">Monto cancelado</th>
+              <th>Recibo de pago</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% page.resource.invoices.first(12).each do |invoice| %>
+              <tr>
+                <td><%= invoice.invoice_uid %></td>
+                <td><%= invoice.description %></td>
+                <td><%= l(invoice.created_at, :format => '%Y-%m-%d') %></td>
+                <td><%= invoice.due_date %></td>
+                <td><span class='badge badge-<%= (invoice.paid?) ? "success":"danger" %>'><%= (invoice.paid?) ? "Pagado":"Pendiente" %></span></td>
+                <td class="text-right">$<%= invoice.amount.to_f %></td>
+                <td class="text-right">$<%= invoice.amount_paid.to_f %></td>
+                <td><%= invoice.payment_receipt %></td>
+                <td>
+                  <a href="<%= admin_invoice_path(invoice) %>" class="btn btn-secondary btn-sm">Ver</a>
+                  <a href="<%= edit_admin_invoice_path(invoice) %>" class="btn btn-light btn-sm">Editar</a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <hr>
+        <h4>Accesos del mes</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% page.resource.customer_accesses.current_month.latest.each do |customer_access| %>
+              <tr>
+                <td><%= l(customer_access.timestamp, :format => "%Y-%m-%d") %></td>
+                <td><%= l(customer_access.timestamp, :format => "%H:%M:%S") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

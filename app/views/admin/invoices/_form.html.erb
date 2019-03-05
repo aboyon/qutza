@@ -1,0 +1,66 @@
+<%#
+# Form Partial
+
+This partial is rendered on a resource's `new` and `edit` pages,
+and renders all form fields for a resource's editable attributes.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Form][1].
+  Contains helper methods to display a form,
+  and knows which attributes should be displayed in the resource's form.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Form
+%>
+
+<%= form_for([namespace, page.resource], html: { class: "form" }) do |f| %>
+  <% if page.resource.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= t(
+          "administrate.form.errors",
+          pluralized_errors: pluralize(page.resource.errors.count, t("administrate.form.error")),
+          resource_name: display_resource_name(page.resource_name)
+        ) %>
+      </h2>
+
+      <ul>
+        <% page.resource.errors.full_messages.each do |message| %>
+          <li class="flash-error"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <section class="main-content__body">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Cliente</b><span><%= page.resource.customer.name %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Fecha emision</b> <span><%= l(page.resource.created_at, :format => '%Y-%m-%d') %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Vencimiento</b><span><%= page.resource.due_date %></span></li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Estado</b><span><%= raw (page.resource.paid?) ? "<span class=\"badge badge-pill badge-success\">Pagada</span>":"<span class=\"badge badge-pill badge-danger\">Impago</span>" %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Vencida?</b> <%= raw (page.resource.paid?) ? "<span class=\"badge badge-pill badge-succees\">No</span>":"<span class=\"badge badge-pill badge-light\">Si</span>" %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Vencimiento</b><span><%= page.resource.due_date %></span></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <% page.attributes.each do |attribute| -%>
+        <div class="field-unit field-unit--<%= attribute.html_class %>">
+          <%= render_field attribute, f: f %>
+        </div>
+      <% end -%>
+
+      <div class="form-actions">
+        <%= f.submit "Actualizar factura", :class => 'btn btn-primary' %>
+      </div>
+    </div>
+<% end %>

@@ -1,0 +1,22 @@
+<% content_for(:title) do %>
+  <%= t("helpers.label.#{page.resource_name}.index_title") %>
+<% end %>
+
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title" id="page-title">
+    <%= t("helpers.label.#{page.resource_name}.index_title") %>
+  </h1>
+</header>
+
+<section class="main-content__body main-content__body--flush">
+  <%= render(
+    "collection",
+    collection_presenter: page,
+    collection_field_name: resource_name,
+    page: page,
+    resources: resources,
+    table_title: "page-title"
+  ) %>
+
+  <%= paginate resources, views_prefix: 'admin' %>
+</section>
