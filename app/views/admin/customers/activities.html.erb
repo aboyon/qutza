@@ -1,0 +1,35 @@
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title">
+    Asignacion de actividades para <%= @resource.name %>
+  </h1>
+
+  <div>
+    <%= link_to(
+      t("administrate.actions.display_resource", name: @resource.name),
+      [namespace, @resource],
+      class: "btn btn-light",
+    ) %>
+  </div>
+</header>
+
+<section class="main-content__body">
+  <div class="content">
+    <%= form_for(@resource, :url => activities_admin_customer_path, :action => :update) do |form| %>
+      <ul class="list-group">
+        <%- @activities.each do |activity| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="form-check">
+              <input class="form-check-input" name="user[activity][]" type="checkbox" value="<%= activity.id %>" id="act-<%= activity.id %>" <%= (@resource.activity_ids.include?(activity.id) ? 'checked' : '') %>>
+              <label class="form-check-label" for="act-<%= activity.id %>">
+                <%= activity.name %>
+              </label>
+            </div>
+            <span class="badge badge-primary badge-pill">$<%= activity.price %></span>
+          </li>
+        <% end %>
+      </ul>
+    <hr />
+    <%= form.submit 'Guardar', :class => 'btn btn-primary' %>
+  </div>
+  <% end %>
+</section>

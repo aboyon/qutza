@@ -32,17 +32,21 @@
 es:
   hello: "Holiiisssss"
   administrate:
+    search:
+      label: "Buscar en listado (presione enter)"
     actions:
       edit: "Editar"
       destroy: "Eliminar"
       search: "Buscar"
       new_resource: "Crear"
       show_resource: "Mostrando: %{name}"
-      edit_resource: "Modificar"
+      edit_resource: "Modificar: %{name}"
       editing_resource: "Editando: %{name}"
       display_resource: "Ver"
       show_profile: "Perfil de %{name}"
     sections:
+      customer:
+        create_title: "Alta de cliente"
       invoice:
         view: "Ver factura %{name}"
         edit_title: "Editando factura %{name}"

@@ -5,6 +5,10 @@ class Invoice < ApplicationRecord
   before_create :ensure_status
   before_create :ensure_due_date
 
+  validates_uniqueness_of :customer_id, conditions: ->() {
+    in_period(Date.today)
+  }
+
   STATUS = {
     :paid => 'paid',
     :pending => 'pending'

@@ -10,6 +10,7 @@ class CustomerAccess < ApplicationRecord
   }
 
   scope :latest, ->() { order('created_at DESC')}
+  scope :for_customer, ->(customer_id) { where(:customer_id => customer_id) }
 
   private
 

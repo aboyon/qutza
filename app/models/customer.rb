@@ -8,10 +8,6 @@ class Customer < ApplicationRecord
 
   scope :active, -> { where(:active => true) }
 
-  def no_debts?
-    invoices.where(:status => Invoice::STATUS[:pending]).empty?
-  end
-
   def overdue?
     invoices
       .where(:status => Invoice::STATUS[:pending])

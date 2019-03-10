@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <div class="container">
+      <%= image_tag('logo.png', {:style => "width:300px"}) %>"
+    </div>
+    <h1 class="display-4">Nuestras actividades</h1>
+    <p class="lead"></p>
+  </div>
+
+  <div class="container">
+    <%- render_offers(@activities, 3).each do |offer_row| %>
+      <div class="card-deck mb-3 text-center">
+        <%-
+            offer_row.each do |offer|
+              next unless offer
+        %>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal"><%= offer.name %></h4>
+            </div>
+            <div class="card-body">
+              <h1 class="card-title pricing-card-title">$<%= offer.price.to_i %> <small class="text-muted">/ mes</small></h1>
+            </div>
+          </div>
+        <%- end %>
+      </div>
+    <%- end %>
+  </div>
+</div>
+<footer class="landing pt-4 my-md-5 pt-md-5 border-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md">
+        <small class="d-block mb-3 text-muted">&copy; 2017-<%= Date.today.year %></small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Seguinos en</h5>
+        <ul class="list-unstyled text-small">
+          <li><a target="_blank" class="text-muted" href="https://www.facebook.com/TrainingTeamRosario/">Facebook</a></li>
+          <li><a class="text-muted" href="#">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Contactanos</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="https://api.whatsapp.com/send?phone=5493413374183&text=Hola%20me%20interesaria%20recibir%20mas%20informacion%20de:">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Veni a conocernos</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">San Luis 3131, Rosario, Argentina</a></li>
+          <li><a class="text-muted" href="#">Horarios: de 8:00 a 21:00</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

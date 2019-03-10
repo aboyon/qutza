@@ -7,6 +7,6 @@ class CustomerActivity < ApplicationRecord
   private
 
     def sanitize_price
-      amount ||= activity.price.to_f
+      self.amount ||= activity.price.to_f
     end
 end

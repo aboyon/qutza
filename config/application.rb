@@ -20,5 +20,8 @@ module Quetza
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :es
     config.autoload_paths += %W(#{config.root}/app/services)
+    config.to_prepare do
+      Administrate::ApplicationController.helper Quetza::Application.helpers
+    end
   end
 end

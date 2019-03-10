@@ -18,7 +18,7 @@ to display a collection of resources in an HTML table.
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Collection
 %>
 
-<table aria-labelledby="<%= table_title %>">
+<table aria-labelledby="<%= table_title %>" class="table table-striped">
   <thead>
     <tr>
       <% collection_presenter.attribute_types.each do |attr_name, attr_type| %>
@@ -54,40 +54,28 @@ to display a collection of resources in an HTML table.
 
   <tbody>
     <% resources.each do |resource| %>
-      <tr class="js-table-row"
-          tabindex="0"
-          <% if valid_action? :show, collection_presenter.resource_name %>
-            <%= %(role=link data-url=#{polymorphic_path([namespace, resource])}) %>
-          <% end %>
-          >
+      <tr tabindex="0">
         <% collection_presenter.attributes_for(resource).each do |attribute| %>
-          <td class="cell-data cell-data--<%= attribute.html_class %>">
-            <% if show_action? :show, resource -%>
-              <a href="<%= polymorphic_path([namespace, resource]) -%>"
-                 class="action-show"
-                 >
-                <%= render_field attribute %>
-              </a>
-            <% end -%>
+          <td>
+            <%= render_field attribute %>
           </td>
         <% end %>
 
         <% if valid_action? :edit, collection_presenter.resource_name %>
-          <td><%= link_to(
-            t("administrate.actions.edit"),
-            [:edit, namespace, resource],
-            class: "action-edit",
-          ) if show_action? :edit, resource%></td>
-        <% end %>
-
-        <% if valid_action? :destroy, collection_presenter.resource_name %>
-          <td><%= link_to(
-            t("administrate.actions.destroy"),
-            [namespace, resource],
-            class: "text-color-red",
-            method: :delete,
-            data: { confirm: t("administrate.actions.confirm") }
-          ) if show_action? :destroy, resource %></td>
+          <td>
+            <div class="btn-group">
+              <button type="button" onClick="location.href='<%= admin_customer_path(resource) %>';" class="btn btn-secondary btn-sm">Ver</button>
+              <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="<%= admin_customer_path(resource) %>">Ver</a>
+                <a class="dropdown-item" href="<%= edit_admin_customer_path(resource) %>">Editar</a>
+                <a class="dropdown-item" href="<%= activities_admin_customer_path(resource) %>?customer_id=<%= resource.id %>">Administrar actividades</a>
+                <a class="dropdown-item" href="<%= admin_customer_accesses_path %>?customer_id=<%= resource.id %>">Ver accesos</a>
+              </div>
+            </div>
+          </td>
         <% end %>
       </tr>
     <% end %>

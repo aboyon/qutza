@@ -1,0 +1,41 @@
+body {
+  background: #fff image-url('logo.png');
+  background-repeat: no-repeat;
+  background-size: 13%;
+  background-position: left bottom;
+}
+
+.landing-page {
+  background-image: none;
+}
+
+a {
+  color: #000;
+}
+
+.app-container {
+  background-image: image-url('logo-letters.png');
+  background-repeat: no-repeat;
+  background-size: 9%;
+  background-position: left 3%;
+}
+
+.navigation {
+  margin-top:50px;
+}
+
+.main-content {
+  background-color: #f0f0f0;
+}
+
+.user_info {
+  background-color: #999;
+  border-bottom: 2px #666 solid;
+}
+
+footer.landing {
+  background-image: image-url('logo-letters.png');
+  background-repeat: no-repeat;
+  background-size: 10%;
+  background-position: 17% bottom;
+}

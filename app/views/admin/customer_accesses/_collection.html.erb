@@ -3,7 +3,7 @@
     <tr>
       <th>Cliente</th>
       <th>Dia y hora</th>
-      <th>Productos</th>
+      <th>Actividades</th>
       <th>Al dia?</th>
     </tr>
   </thead>
@@ -15,13 +15,13 @@
           <a href="<%= admin_customer_path(resource.customer) %>"><%= resource.customer.name %></a>
         </td>
         <td>
-          <%= l(resource.timestamp, :format => '%Y-%m-%d') %>
+          <%= l(resource.timestamp, :format => '%Y-%m-%d a las %H:%M') %>
         </td>
         <td>
           <%= resource.customer.activities.map(&:name).join(',') %>
         </td>
         <td>
-          <%= raw (resource.customer.no_debts?) ? "<span class=\"badge badge-pill badge-success\">SI</span>" : "<span class=\"badge badge-pill badge-danger\">NO</span>" %>
+          <%= raw (resource.customer.overdue?) ? "<span class=\"badge badge-pill badge-success\">SI</span>" : "<span class=\"badge badge-pill badge-danger\">NO</span>" %>
         </td>
       </tr>
     <% end %>

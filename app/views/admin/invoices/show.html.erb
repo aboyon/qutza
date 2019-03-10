@@ -73,7 +73,13 @@ as well as a link to its edit page.
     <% if page.resource.paid? %>
       <hr>
       <div class="row">
-        factura pagada
+        <div class="alert alert-success col-12" role="alert">
+          <h4 class="alert-heading">Pagado</h4>
+          <p>
+            Cancelada el dia <b><%= l(page.resource.updated_at, :format => "%Y-%m-%d a las %H:%M") %></b>.<br/>
+            Recibo de pago: <b><%= (page.resource.payment_receipt.present?) ? page.resource.payment_receipt : "No disponible" %></b>. Monto total cancelado: <b>$<%= page.resource.amount_paid %></b>
+          </p>
+        </div>
       </div>
     <% end %>
   </div>
