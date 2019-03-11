@@ -56,7 +56,7 @@ as well as a link to its edit page.
                 <span class="badge badge-dark badge-pill">$<%= customer_activity.amount %></span>
               </li>
             <% end %>
-            <li class='list-group-item list-group-item-<%= (page.resource.overdue?) ? "success" : "danger"%>'><%= (page.resource.overdue?) ? "Cliente al dia" : "Registra deuda" %></li>
+            <li class='list-group-item list-group-item-<%= (page.resource.overdue?) ? "danger" : "success"%>'><%= (page.resource.overdue?) ? "Registra deuda" : "Cliente al dia" %></li>
           </ul>
         </div>
       </div>
