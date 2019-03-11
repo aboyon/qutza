@@ -7,7 +7,7 @@ class Invoice < ApplicationRecord
 
   validates_uniqueness_of :customer_id, conditions: ->() {
     in_period(Date.today)
-  }
+  }, :on => :create
 
   STATUS = {
     :paid => 'paid',
