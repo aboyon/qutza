@@ -83,3 +83,14 @@ es:
         index_title: "Actividades"
         name: "Nombre de actividad"
         price: "Precio"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: "Los password ingresados no coinciden entre si"
+            password:
+              too_short: "El password que ingresaste es muy corto."
+            current_password:
+              invalid: "El valor que ingresaste como password actual no es correcto"

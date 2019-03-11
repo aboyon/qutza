@@ -15,6 +15,6 @@ class CustomerAccess < ApplicationRecord
   private
 
     def ensure_timestamp
-      timestamp ||= DateTime.now
+      self.timestamp ||= DateTime.now
     end
 end

@@ -1,38 +1,36 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container">
+  <h2>Editar perfil - <%= current_user.name %></h2>
+  <div class="row">
+    <div class="col-8">
+      <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
+        <div class="form-row">
+          <div class="col">
+            <%= f.label :password %>
+            <%= f.password_field :password, autocomplete: "new-password", :class => 'form-control' %>
+            <% if @minimum_password_length %>
+              <em>Minimo <%= @minimum_password_length %> caracteres</em>
+            <% end %>
+          </div>
 
-<div class="content">
-  <%= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
+          <div class="col">
+            <%= f.label :password_confirmation, 'Confirma tu nuevo password' %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <hr/>
+            <%= f.label :current_password, 'Password actual' %> <i>(ingresa tu password <b>actual</b> para confirmar los cambios)</i><br />
+              <%= f.password_field :current_password, autocomplete: "current-password", :class => 'form-control' %>
+          </div>
+        </div>
 
-    <div class="field">
-      <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'form-control' %>
-    </div>
-
-    <div class="field">
-      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
-      <%= f.password_field :password, autocomplete: "new-password", :class => 'form-control' %>
-      <% if @minimum_password_length %>
-        <br />
-        <em><%= @minimum_password_length %> characters minimum</em>
+        <div class="actions border-top">
+          <%= f.submit "Actualizar", :class => 'btn btn-secondary' %>
+          <%= link_to "Volver", :back, :class => 'btn btn-outline-secondary' %>
+        </div>
       <% end %>
     </div>
-
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'form-control' %>
-    </div>
-
-    <div class="field">
-      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-      <%= f.password_field :current_password, autocomplete: "current-password", :class => 'form-control' %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "Update", :class => 'btn btn-secondary' %>
-    </div>
-  <% end %>
-
-
-  <%= link_to "Back", :back %>
+  </div>
 </div>

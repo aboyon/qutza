@@ -15,7 +15,7 @@
           <a href="<%= admin_customer_path(resource.customer) %>"><%= resource.customer.name %></a>
         </td>
         <td>
-          <%= l(resource.timestamp, :format => '%Y-%m-%d a las %H:%M') %>
+          <%= (resource.timestamp) ? l(resource.timestamp, :format => '%Y-%m-%d a las %H:%M') : 'N/A' %>
         </td>
         <td>
           <%= resource.customer.activities.map(&:name).join(',') %>

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations'}, :skip => [:registrations]
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }, :skip => [:registrations]
 
   as :user do
     get 'users/edit' => 'users/registrations#edit', :as => 'edit_user_registration'
@@ -19,6 +22,7 @@ Rails.application.routes.draw do
     resources :customer_accesses, :only => [:index]
     get '/', :to => "customers#index"
   end
+  resources :access, :only => [:index, :create]
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'

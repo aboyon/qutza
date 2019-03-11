@@ -22,6 +22,8 @@ class DefaultCustomer < SeedMigration::Migration
       :payment_receipt => 'PMNTREC01',
       :description => customer_activity.activity.name
     )
+    nov18_created_at = DateTime.now - 3.months
+    nov2018.update_columns(:created_at => nov18_created_at, :due_date => (nov18_created_at.next_month.at_beginning_of_month + 10.days))
 
     dec2018 = Invoice.create!(
       :customer => customer,
@@ -31,6 +33,8 @@ class DefaultCustomer < SeedMigration::Migration
       :payment_receipt => 'PMNTREC43',
       :description => customer_activity.activity.name
     )
+    dec18_created_at = DateTime.now - 2.months
+    dec2018.update_columns(:created_at => dec18_created_at, :due_date => (dec18_created_at.next_month.at_beginning_of_month + 10.days))
 
     jan2019 = Invoice.create!(
       :customer => customer,
@@ -40,6 +44,8 @@ class DefaultCustomer < SeedMigration::Migration
       :payment_receipt => 'PMNTREC87',
       :description => customer_activity.activity.name
     )
+    jan18_created_at = DateTime.now - 1.months
+    jan2019.update_columns(:created_at => jan18_created_at, :due_date => (jan18_created_at.next_month.at_beginning_of_month + 10.days))
 
     Invoice.create!(
       :customer => customer,
@@ -47,14 +53,6 @@ class DefaultCustomer < SeedMigration::Migration
       :status => 'pending',
       :description => customer_activity.activity.name
     )
-
-    nov18_created_at = DateTime.now - 3.months
-    dec18_created_at = DateTime.now - 2.months
-    jan18_created_at = DateTime.now - 1.months
-
-    nov2018.update_columns(:created_at => nov18_created_at, :due_date => (nov18_created_at.next_month.at_beginning_of_month + 10.days))
-    dec2018.update_columns(:created_at => dec18_created_at, :due_date => (dec18_created_at.next_month.at_beginning_of_month + 10.days))
-    jan2019.update_columns(:created_at => jan18_created_at, :due_date => (jan18_created_at.next_month.at_beginning_of_month + 10.days))
   end
 
   def down

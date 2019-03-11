@@ -1,0 +1,54 @@
+<div class="container">
+  <%= render(:partial => "home/public_centered_header", :locals => {:title => 'Acceso socios'}) %>
+</div>
+<div class="container">
+  <%= form_tag(access_index_path, :method => :post, :id => 'access_form') do %>
+    <div class="form-group row">
+      <input class="form-control form-control-lg" autocomplete="off" id="access_person_id" name="access[person_id]" type="number" placeholder="ingresa tu DNI">
+    </div>
+    <div class="form-group row">
+      <button class="btn btn-primary btn-lg btn-block" id="btn_submit" disabled="disabled">Ingresar</button>
+    </div>
+  <% end %>
+  <h2 class="display-4" id="customer_information" class="text-center"></h2>
+</div>
+<%- content_for(:javascript) do %>
+<script type="text/javascript">
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  function handleAccessValidation(event) {
+    event.preventDefault();
+    $('#btn_submit').attr({
+      "disabled": true
+    });
+    $.post('<%= access_index_path %>.json', {
+      "access":{
+        "person_id": event.target.elements.access_person_id.value
+      }
+    },'json').fail(function(response) {
+      if (response.status == 404) {
+        $('#customer_information').html('Socio inexistente');
+      } else {
+        $('#customer_information').html('Ocurrio un error en nuestra plataforma');
+      }
+    }).done(function(response) {
+      $('#customer_information').html('Hola: <b>' + response.customer +'</b>');
+    })
+  }
+  function handleFormStatus(event) {
+    var form_enabled = !(event.target.value.length >= 8)
+    $('#btn_submit').attr({
+      "disabled": form_enabled
+    });
+    if (form_enabled == true) {
+      $('#customer_information').html('');
+    }
+  }
+
+  $(document).on('submit',"#access_form", handleAccessValidation)
+  $(document).on('keyup',"#access_person_id", handleFormStatus)
+</script>
+<% end %>

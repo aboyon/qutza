@@ -39,3 +39,19 @@ footer.landing {
   background-size: 10%;
   background-position: 17% bottom;
 }
+
+.actions {
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+#error_explanation h2 {
+  font-size: 95%;
+}
