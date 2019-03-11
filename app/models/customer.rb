@@ -11,7 +11,7 @@ class Customer < ApplicationRecord
   def overdue?
     invoices
       .where(:status => Invoice::STATUS[:pending])
-      .where('due_date > ?', Date.today)
+      .where('due_date < ?', Date.today)
       .any?
   end
 

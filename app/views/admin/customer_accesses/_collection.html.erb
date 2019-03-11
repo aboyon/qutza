@@ -21,7 +21,7 @@
           <%= resource.customer.activities.map(&:name).join(',') %>
         </td>
         <td>
-          <%= raw (resource.customer.overdue?) ? "<span class=\"badge badge-pill badge-success\">SI</span>" : "<span class=\"badge badge-pill badge-danger\">NO</span>" %>
+          <%= raw (!resource.customer.overdue?) ? "<span class=\"badge badge-pill badge-success\">SI</span>" : "<span class=\"badge badge-pill badge-danger\">NO</span>" %>
         </td>
       </tr>
     <% end %>
