@@ -9,7 +9,6 @@ describe Customer, type: :model do
         customer
         InvocingService.new(base_date).generate_invoices
       end
-      it { expect(customer.no_debts?).to be_falsey }
       it { expect(customer.overdue?).to be_truthy }
     end
   end
