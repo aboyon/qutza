@@ -7,7 +7,7 @@ class Invoice < ApplicationRecord
 
   validates_uniqueness_of :customer_id, conditions: ->() {
     in_period(Date.today)
-  }, :on => :create
+  }, :on => :create, :unless => Proc.new { |i| i.due_date.present? }
 
   STATUS = {
     :paid => 'paid',
@@ -15,8 +15,8 @@ class Invoice < ApplicationRecord
   }.freeze
 
   scope :in_period, ->(date) {
-    start_date = date.next_month.at_beginning_of_month
-    end_date = date.next_month.at_end_of_month
+    start_date = date.at_beginning_of_month
+    end_date = date.at_end_of_month
     where('due_date >= ? AND due_date <= ?', start_date, end_date)
   }
 
