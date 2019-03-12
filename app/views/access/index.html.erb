@@ -48,7 +48,10 @@
     }
   }
 
-  $(document).on('submit',"#access_form", handleAccessValidation)
-  $(document).on('keyup',"#access_person_id", handleFormStatus)
+  $(document).on('submit',"#access_form", handleAccessValidation);
+  $(document).on('keyup',"#access_person_id", handleFormStatus);
+  $(function() {
+    $("#access_person_id").focus();
+  });
 </script>
 <% end %>

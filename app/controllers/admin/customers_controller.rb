@@ -1,34 +1,58 @@
 module Admin
   class CustomersController < Admin::ApplicationController
+
+    before_action :resource, :except => [:index, :new]
+
     def index
       super
       @resources = Customer.page(params[:page]).per(10)
     end
 
-    # Define a custom finder by overriding the `find_resource` method:
-    # def find_resource(param)
-    #   Customer.find_by!(slug: param)
-    # end
-
-    # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
-    # for more information
-
     def activities
-      @resource = find_resource(params[:id])
       @activities = Activity.all
     end
 
     def update_activities
-      @resource = find_resource(params[:id])
-      Rails.logger.info activity_parameters.values.flatten.map(&:to_i).inspect
-      @resource.activity_ids = activity_parameters.values.flatten.map(&:to_i)
-      redirect_to(admin_customer_path(@resource))
+      resource.activity_ids = activity_parameters.values.flatten.map(&:to_i)
+      redirect_to(admin_customer_path(resource))
+    end
+
+    def new_payment
+      activities_data = resource.activities.pluck(:price, :name)
+      @invoce_data = {
+        :total_amount => activities_data.sum(&:first).to_f,
+        :description => activities_data.map(&:last).join(',')
+      }
+    end
+
+    def create_payment
+      begin
+        invoice = Invoice.create!(
+          :customer => resource,
+          :due_date => create_invoice_params[:due_date],
+          :amount => create_invoice_params[:amount],
+          :amount_paid => create_invoice_params[:amount_paid],
+          :description => create_invoice_params[:description]
+        )
+        redirect_to(edit_admin_invoice_path(invoice))
+      rescue => e
+        flash[:error] = e.message
+        redirect_to(payment_admin_customer_path(resource))
+      end
     end
 
     private
 
+      def resource
+        @resource ||= find_resource(params[:id])
+      end
+
       def activity_parameters
         params.require(:user).permit(:activity => [])
+      end
+
+      def create_invoice_params
+        params.require(:user_invoice).permit(:due_date, :amount, :description, :amount_paid)
       end
   end
 end

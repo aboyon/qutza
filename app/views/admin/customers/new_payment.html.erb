@@ -1,0 +1,55 @@
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title" id="page-title">
+    Ingresando nuevo pago
+  </h1>
+
+  <div>
+    <%= link_to "Ver cliente", :back, class: "btn btn-secondary" %>
+  </div>
+</header>
+
+<section class="main-content__body">
+  <div class="content">
+    <%= form_for(@resource, :url => payment_admin_customer_path, :method => :post) do |form| %>
+    <input type="hidden" name="user_invoice[amount]"  value="<%= @invoce_data[:total_amount] %>"/>
+    <div class="form-group row">
+      <label for="user_invoice_due_date" class="col-sm-2 col-form-label">Periodo</label>
+      <div class="col-sm-4">
+        <input type="date" id="user_invoice_due_date" name="user_invoice[due_date]" data-date="<%= Date.today.strftime('%Y-%m-%d') %>" data-date-format="YYYY-MM-DD" value="<%= Date.today.strftime('%Y-%m-%d') %>"  placeholder="Periodo (e.g <%= Date.today.strftime('%Y-%m-%d') %>)">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="description" class="col-sm-2 col-form-label">Concepto</label>
+      <div class="col-sm-4">
+        <input type="text" id="user_invoice_description" name="user_invoice[description]" value="<%= @invoce_data[:description] %>" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="amount" class="col-sm-2 col-form-label">Monto a facturar</label>
+      <div class="col-sm-4">
+        $<%= @invoce_data[:total_amount] %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="amount" class="col-sm-2 col-form-label">Monto pagado</label>
+      <div class="col-sm-4">
+        <input type="text" id="user_invoice_price" name="user_invoice[amount_paid]"  value="<%= @invoce_data[:total_amount] %>"/>
+      </div>
+    </div>
+    <hr />
+    <%= form.submit 'Generar factura', :class => 'btn btn-primary' %>
+  </div>
+  <% end %>
+</section>
+<% content_for(:javascript) do %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+<script type="text/javascript">
+  $("#user_invoice_due_date").on("change", function() {
+    this.setAttribute(
+      "data-date",
+      moment(this.value, "YYYY-MM-DD")
+      .format( this.getAttribute("data-date-format") )
+    )
+  }).trigger("change");
+</script>
+<% end %>

@@ -10,13 +10,13 @@ module Admin
       end
     end
 
-    # rescue_from ActiveRecord::RecordNotFound do |exception|
-    #   respond_to do |format|
-    #     format.json { head :not_found, :content_type => 'text/json' }
-    #     format.html { render 'admin/application/not_found', :status => 404 }
-    #     format.js   { head :not_found, :content_type => 'text/json' }
-    #   end
-    # end
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      respond_to do |format|
+        format.json { head :not_found, :content_type => 'text/json' }
+        format.html { render 'admin/application/not_found', :status => 404 }
+        format.js   { head :not_found, :content_type => 'text/json' }
+      end
+    end
 
     def requested_resources
       scoped_resource

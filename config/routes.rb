@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       member do
         get 'activities'
         patch 'activities', :to => "customers#update_activities"
+        get 'payment', :to => "customers#new_payment"
+        post 'payment', :to => "customers#create_payment"
       end
     end
     resources :activities, :except => [:destroy]

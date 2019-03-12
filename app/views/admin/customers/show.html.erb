@@ -64,7 +64,10 @@ as well as a link to its edit page.
     <div class="row">
       <div class="col">
         <hr>
-        <h4>Facturacion ultimos 12 meses</h4>
+        <div>
+          <a href="<%= payment_admin_customer_path(page.resource) %>" class="btn btn-secondary float-right">Ingresar pago</a>
+          <h4>Facturacion ultimos 12 meses</h4>
+        </div>
         <table class="table table-striped">
           <thead>
             <tr>

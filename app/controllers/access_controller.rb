@@ -1,4 +1,5 @@
 class AccessController < ApplicationController
+  before_action :authorize_user
   before_action :set_default_response_format, :only => [:create]
   before_action :find_customer, :only => [:create]
 
@@ -19,6 +20,10 @@ class AccessController < ApplicationController
   end
 
   private
+
+    def authorize_user
+      redirect_to(root_path) and return unless current_user&.admin?
+    end
 
     def find_customer
       @customer = Customer.find_by!(:person_identifable_nbr => create_params[:person_id])
