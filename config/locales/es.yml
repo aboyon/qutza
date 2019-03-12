@@ -86,6 +86,11 @@ es:
   activerecord:
     errors:
       models:
+        customer:
+          attributes:
+            email:
+              blank: "El email es obligatorio"
+              taken: "Esta direccion de email ya existe para otro cliente"
         user:
           attributes:
             password_confirmation:

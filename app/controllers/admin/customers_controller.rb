@@ -1,7 +1,7 @@
 module Admin
   class CustomersController < Admin::ApplicationController
 
-    before_action :resource, :except => [:index, :new]
+    before_action :resource, :except => [:index, :new, :create]
 
     def index
       super
