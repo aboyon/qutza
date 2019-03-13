@@ -8,7 +8,7 @@ class InvoiceDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    customer: Field::BelongsTo,
+    customer: Field::BelongsTo.with_options(searchable: false),
     id: Field::Number,
     status: EnumOptionField.with_options(
       :choices => Invoice::STATUS.values.map { |status| [I18n.t("administrate.sections.invoice.status.#{status}"), status] }
@@ -20,8 +20,9 @@ class InvoiceDashboard < Administrate::BaseDashboard
     description: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    client_name: Field::String,
-    due_date: Field::DateTime.with_options(format: '%Y-%m-%d')
+    client_name: Field::String.with_options(searchable: false),
+    due_date: Field::DateTime.with_options(format: '%Y-%m-%d'),
+    period: Field::String.with_options(searchable: false),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -36,6 +37,7 @@ class InvoiceDashboard < Administrate::BaseDashboard
     :payment_receipt,
     :description,
     :due_date,
+    :period
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -50,6 +52,7 @@ class InvoiceDashboard < Administrate::BaseDashboard
     :description,
     :created_at,
     :due_date,
+    :period
   ].freeze
 
   # FORM_ATTRIBUTES

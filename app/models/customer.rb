@@ -2,14 +2,12 @@ class Customer < ApplicationRecord
   belongs_to :user, :optional => true
   has_many :customer_activities
   has_many :activities, :through => :customer_activities
-  has_many :customer_accesses
-  has_many :accesses, :through => :customer_accesses
+  has_many :customer_accesses, counter_cache: true
   has_many :invoices, -> { order('created_at DESC') }
 
   scope :active, -> { where(:active => true) }
 
-  validates_presence_of :email
-  validates_uniqueness_of :email
+  validates :email, :presence => true, :format => { with: URI::MailTo::EMAIL_REGEXP }
 
   def overdue?
     invoices

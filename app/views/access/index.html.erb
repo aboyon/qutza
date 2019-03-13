@@ -19,6 +19,9 @@
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     }
   });
+
+  var timer;
+
   function handleAccessValidation(event) {
     event.preventDefault();
     $('#btn_submit').attr({
@@ -31,12 +34,16 @@
     },'json').fail(function(response) {
       if (response.status == 404) {
         $('#customer_information').html('Socio inexistente');
+      } else if(response.status == 406) {
+        console.log(response.responseJSON);
+        $('#customer_information').html(response.responseJSON.errors.attributes.customer_id[0]);
       } else {
         $('#customer_information').html('Ocurrio un error en nuestra plataforma');
       }
     }).done(function(response) {
       $('#customer_information').html('Hola: <b>' + response.customer +'</b>');
     })
+    timer = setInterval(restoreAccessStatus, 2000);
   }
   function handleFormStatus(event) {
     var form_enabled = !(event.target.value.length >= 8)
@@ -46,6 +53,14 @@
     if (form_enabled == true) {
       $('#customer_information').html('');
     }
+  }
+
+  function restoreAccessStatus() {
+    console.log('reseting form..');
+    clearInterval(timer);
+    $('#customer_information').html('');
+    $('#btn_submit').attr({ "disabled": true});
+    $("#access_person_id").val('').focus();
   }
 
   $(document).on('submit',"#access_form", handleAccessValidation);

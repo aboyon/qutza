@@ -28,13 +28,17 @@ class Invoice < ApplicationRecord
     due_date < Date.today
   end
 
-  def next_due_date(date)
-    next_due_date = (self.created_at || date).next_month.at_beginning_of_month + 9.days
-    (next_due_date.sunday?) ? next_due_date.next_weekday : next_due_date
-  end
-
+  # @returns <String>
+  # @desc "2019Aug"
   def period
     due_date.strftime("%Y/%m")
+  end
+
+  # @returns <Date>
+  # @desc: First business day after day 10th of each month.
+  def self.next_due_date(date)
+    next_due_date = date.next_month.at_beginning_of_month + 9.days
+    (next_due_date.sunday?) ? next_due_date.next_weekday : next_due_date
   end
 
   private
@@ -48,6 +52,6 @@ class Invoice < ApplicationRecord
     end
 
     def ensure_due_date
-      self.due_date ||= next_due_date(Date.today)
+      self.due_date ||= self.next_due_date(Date.today)
     end
 end

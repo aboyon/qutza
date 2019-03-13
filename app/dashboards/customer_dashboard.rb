@@ -15,6 +15,9 @@ class CustomerDashboard < Administrate::BaseDashboard
     joined_at: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    active: Field::Boolean,
+    medical_approval: Field::Boolean,
+    notes: Field::Text
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +28,9 @@ class CustomerDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :name,
     :person_identifable_nbr,
-    :email
+    :email,
+    :active,
+    :medical_approval
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -38,6 +43,9 @@ class CustomerDashboard < Administrate::BaseDashboard
     :joined_at,
     :created_at,
     :updated_at,
+    :active,
+    :medical_approval,
+    :notes
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -48,6 +56,9 @@ class CustomerDashboard < Administrate::BaseDashboard
     :person_identifable_nbr,
     :email,
     :joined_at,
+    :active,
+    :medical_approval,
+    :notes
   ].freeze
 
   # Overwrite this method to customize how customers are displayed

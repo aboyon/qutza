@@ -6,15 +6,17 @@ class AccessController < ApplicationController
   def index; end
 
   def create
-    access = CustomerAccess.create!(:customer => @customer)
+    access = CustomerAccess.new(:customer => @customer)
+    access.save!
     render :json => {
       :customer => @customer.name,
-      :access => access.attributes
+      :access => access.attributes,
+      :overdue => @customer.overdue?
     }.to_json, :status => :ok
   rescue ActiveRecord::RecordNotFound => e
     fail_nicely(e, @customer, :not_found) && return
   rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid => e
-    fail_nicely(e, access, :bad_format) && return
+    fail_nicely(e, access, :not_acceptable) && return
   rescue => e
     fail_nicely(e, access) && return
   end
@@ -39,8 +41,10 @@ class AccessController < ApplicationController
 
     def fail_nicely(e, resource, status = :internal_server_error)
       error = {:attributes => resource.errors.to_hash }
-      error[:backtrace] = e.backtrace.reject {|path| path.include?('.rbenv') }.first(10) unless Rails.env.production?
-      render :json => {:exception => e.inspect, :errors => error}.to_json, :status => status
+      render :json => {
+        :exception => e.inspect,
+        :errors => error
+      }.to_json, :status => status
     end
 
 end

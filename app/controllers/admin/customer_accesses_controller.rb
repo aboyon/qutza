@@ -1,10 +1,11 @@
 module Admin
   class CustomerAccessesController < Admin::ApplicationController
-    def index
-      super
-      @resources = CustomerAccess.latest
-      @resources = @resources.for_customer(params[:customer_id]) if params[:customer_id].present?
-      @resources.page(params[:page]).per(20)
+    def scoped_resource
+      if params[:customer_id].present?
+        resource_class.latest.for_customer(params[:customer_id])
+      else
+        resource_class.latest
+      end
     end
   end
 end

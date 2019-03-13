@@ -9,12 +9,15 @@ module Admin
     end
 
     def activities
-      @activities = Activity.all
+      @activities = Activity.active.all
     end
 
     def update_activities
       resource.activity_ids = activity_parameters.values.flatten.map(&:to_i)
       redirect_to(admin_customer_path(resource))
+    rescue ActionController::ParameterMissing => e
+      flash[:error] = "Por favor selecciona al menos una actividad"
+      redirect_to(activities_admin_customer_path(resource))
     end
 
     def new_payment

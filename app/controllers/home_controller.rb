@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @activities = Activity.all
+    @activities = Activity.active.all
   end
 end

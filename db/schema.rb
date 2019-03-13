@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_192031) do
+ActiveRecord::Schema.define(version: 2019_03_13_041217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_02_26_192031) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["name"], name: "index_activities_on_name"
   end
 
@@ -47,6 +48,8 @@ ActiveRecord::Schema.define(version: 2019_02_26_192031) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "medical_approval", default: true
+    t.text "notes"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["joined_at"], name: "index_customers_on_joined_at"
     t.index ["name"], name: "index_customers_on_name"

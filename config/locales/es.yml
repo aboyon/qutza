@@ -66,6 +66,7 @@ es:
         description: "Descripcion"
         amount_paid: "Monto pagado"
         due_date: "Fecha Vencimiento"
+        period: "Periodo"
       customer_access:
         index_title: "Acceso de clientes"
         customer: "Cliente"
@@ -75,17 +76,27 @@ es:
       customer:
         index_title: "Clientes"
         name: "Nombre"
+        active: "Activo?"
+        medical_approval: "Apto medico?"
         email: "Correo electronico"
         person_identifable_nbr: "Documento"
         joined_at: "Fecha de Inicio"
         create_client_btn: "Crear nuevo cliente"
+        notes: "Notas"
       activity:
         index_title: "Actividades"
         name: "Nombre de actividad"
         price: "Precio"
+        active: "Activo?"
   activerecord:
     errors:
+      messages:
+        record_invalid: "Mal!"
       models:
+        customer_access:
+          attributes:
+            customer_id:
+              eager_customer_trying_to_access: "Ya registramos tu acceso, muchas gracias."
         customer:
           attributes:
             email:
