@@ -8,8 +8,8 @@ describe Invoice, type: :model do
       let(:date) { Date.new(2019, 3, 4) }
       let(:due_date) { Date.new(2019, 4, 10) }
 
-      it { expect(subject.next_due_date(date)).to eq(due_date) }
-      it { expect(subject.next_due_date(date)).not_to be_sunday }
+      it { expect(subject.class.next_due_date(date)).to eq(due_date) }
+      it { expect(subject.class.next_due_date(date)).not_to be_sunday }
     end
   end
 end
