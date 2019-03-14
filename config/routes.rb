@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :admin do
-    resources :customers, :except => [:destroy] do
+    resources :customers, :except => [:destroy], :defaults => { :format => 'html' } do
       member do
         get 'activities'
         patch 'activities', :to => "customers#update_activities"
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resources :activities, :except => [:destroy]
     resources :invoices, :except => [:new, :create, :destroy], :controller => 'invoices'
     resources :customer_accesses, :only => [:index]
-    get '/', :to => "customers#index"
+    get '/', :to => "customers#index", :format => 'html'
   end
   resources :access, :only => [:index, :create]
 
