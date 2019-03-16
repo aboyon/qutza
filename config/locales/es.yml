@@ -91,7 +91,7 @@ es:
   activerecord:
     errors:
       messages:
-        record_invalid: "Mal!"
+        record_invalid: "El registro es invalido. No se pudo crear."
       models:
         customer_access:
           attributes:

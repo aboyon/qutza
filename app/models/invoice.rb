@@ -5,10 +5,6 @@ class Invoice < ApplicationRecord
   before_create :ensure_status
   before_create :ensure_due_date
 
-  validates_uniqueness_of :customer_id, conditions: ->() {
-    in_period(Date.today)
-  }, :on => :create, :unless => Proc.new { |i| i.due_date.present? }
-
   STATUS = {
     :paid => 'paid',
     :pending => 'pending'
@@ -52,6 +48,6 @@ class Invoice < ApplicationRecord
     end
 
     def ensure_due_date
-      self.due_date ||= self.next_due_date(Date.today)
+      self.due_date ||= self.class.next_due_date(Date.today)
     end
 end

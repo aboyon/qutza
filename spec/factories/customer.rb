@@ -22,5 +22,10 @@ FactoryBot.define do
       name { 'Crossfit 2 por semana' }
       price { 800 }
     end
+
+    trait :psi do
+      name { 'PreparacionFisicaIntegral' }
+      price { 500 }
+    end
   end
 end

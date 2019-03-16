@@ -12,4 +12,28 @@ describe Invoice, type: :model do
       it { expect(subject.class.next_due_date(date)).not_to be_sunday }
     end
   end
+
+  describe "#due?" do
+    before do
+      subject.due_date = Date.yesterday
+    end
+
+    it { expect(subject).to be_due }
+  end
+
+  describe "#paid?" do
+    before do
+      subject.status = Invoice::STATUS[:paid]
+    end
+
+    it { expect(subject).to be_paid }
+  end
+
+  describe "#period" do
+    before do
+      subject.due_date = Date.new(2019, 3, 10)
+    end
+
+    it { expect(subject.period).to eq('2019/03') }
+  end
 end

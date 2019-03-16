@@ -15,13 +15,4 @@ class Customer < ApplicationRecord
       .where('due_date < ?', Date.today)
       .any?
   end
-
-  def deactivate!
-    update_columns('status', false)
-  end
-
-  def activate!
-    update_columns('status', true)
-  end
-
 end

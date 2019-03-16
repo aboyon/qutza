@@ -30,13 +30,7 @@ module Admin
 
     def create_payment
       begin
-        invoice = Invoice.create!(
-          :customer => resource,
-          :due_date => create_invoice_params[:due_date],
-          :amount => create_invoice_params[:amount],
-          :amount_paid => create_invoice_params[:amount_paid],
-          :description => create_invoice_params[:description]
-        )
+        invoice = Invoice.create!(create_invoice_params.merge!(:customer => resource))
         redirect_to(edit_admin_invoice_path(invoice))
       rescue => e
         flash[:error] = e.message
