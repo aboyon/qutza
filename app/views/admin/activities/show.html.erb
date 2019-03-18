@@ -1,0 +1,40 @@
+<% content_for(:title) { page.resource.name } %>
+
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title">
+    <%= content_for(:title) %>
+  </h1>
+  <div>
+    <%= link_to(
+      t("administrate.actions.edit_resource", name: page.page_title),
+      [:edit, namespace, page.resource],
+      class: "btn btn-secondary",
+    ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
+  </div>
+  <hr>
+</header>
+
+<section>
+  <div class="container-fluid">
+    <hr>
+    <div class="row">
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Socios</b><span><%= page.resource.customers.size %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Accessos en mes actual (<%= Date.today.strftime('%Y/%m') %>)</b><span><%= @access_in_current_period %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Accessos en mes anterior</b><span><%= @access_in_last_period %></span></li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Ingreso estimado mensual</b><span>$<%= @estimated_monthly_income %></span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><b>Real facturado mes actual</b><span>$<%= @actual_income_in_current_period %></span></li>
+          <li class="list-group-item">
+            <b>Ingreso mensual estimado vs real facturado</b><br/>
+            <%= raw(build_progress_bar(@estimated_monthly_income.to_i, @actual_income_in_current_period.to_i)) %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

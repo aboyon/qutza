@@ -16,6 +16,8 @@ class Invoice < ApplicationRecord
     where('due_date >= ? AND due_date <= ?', start_date, end_date)
   }
 
+  scope :paid, -> { where(:status => STATUS[:paid]) }
+
   def paid?
     status.downcase == STATUS[:paid]
   end

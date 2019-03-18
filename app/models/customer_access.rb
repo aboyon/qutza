@@ -4,8 +4,12 @@ class CustomerAccess < ApplicationRecord
   before_create :ensure_timestamp
 
   scope :current_month, ->() {
-    start_date = Date.today.at_beginning_of_month
-    end_date = Date.today.at_end_of_month
+    in_period(Date.today)
+  }
+
+  scope :in_period, ->(date) {
+    start_date = date.at_beginning_of_month
+    end_date = date.at_end_of_month
     where('timestamp >= ? AND timestamp <= ?', start_date, end_date)
   }
 
