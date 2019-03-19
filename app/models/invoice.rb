@@ -1,6 +1,9 @@
 class Invoice < ApplicationRecord
   include Concerns::CustomerCommon
 
+  has_many :invoice_discounts
+  has_many :discounts, :through => :invoice_discounts
+
   before_create :ensure_uid
   before_create :ensure_status
   before_create :ensure_due_date
@@ -37,6 +40,10 @@ class Invoice < ApplicationRecord
   def self.next_due_date(date)
     next_due_date = date.next_month.at_beginning_of_month + 9.days
     (next_due_date.sunday?) ? next_due_date.next_weekday : next_due_date
+  end
+
+  def profit
+    amount_paid.to_f - invoice_discounts.sum(:amount).to_f
   end
 
   private

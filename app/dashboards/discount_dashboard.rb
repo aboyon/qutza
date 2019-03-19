@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class CustomerDashboard < Administrate::BaseDashboard
+class DiscountDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -10,14 +10,13 @@ class CustomerDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     name: Field::String,
-    person_identifable_nbr: Field::Number,
-    email: EmailField,
-    joined_at: Field::DateTime,
+    value: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    active: Field::Boolean,
-    medical_approval: Field::Boolean,
-    notes: Field::Text
+    discount_type: EnumOptionField.with_options(
+      :choices => Discount::TYPE.values.map { |type| [I18n.t("administrate.sections.discount.discount_type.#{type}"), type] }
+    ),
+    code: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,25 +26,16 @@ class CustomerDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :name,
-    :person_identifable_nbr,
-    :email,
-    :active,
-    :medical_approval
+    :value,
+    :discount_type
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :id,
     :name,
-    :person_identifable_nbr,
-    :email,
-    :joined_at,
-    :created_at,
-    :updated_at,
-    :active,
-    :medical_approval,
-    :notes
+    :value,
+    :discount_type
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -53,18 +43,14 @@ class CustomerDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
-    :person_identifable_nbr,
-    :email,
-    :joined_at,
-    :active,
-    :medical_approval,
-    :notes
+    :discount_type,
+    :value,
   ].freeze
 
-  # Overwrite this method to customize how customers are displayed
+  # Overwrite this method to customize how activities are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(customer)
-    customer.name
+  def display_resource(discount)
+    discount.name
   end
 end

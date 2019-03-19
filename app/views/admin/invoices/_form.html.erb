@@ -33,7 +33,6 @@ and renders all form fields for a resource's editable attributes.
     </div>
   <% end %>
 
-  <section class="main-content__body">
   <div class="container-fluid">
     <div class="row">
       <div class="col-6">
@@ -53,14 +52,16 @@ and renders all form fields for a resource's editable attributes.
     </div>
     <hr>
     <div class="row">
-      <% page.attributes.each do |attribute| -%>
-        <div class="field-unit field-unit--<%= attribute.html_class %>">
-          <%= render_field attribute, f: f %>
+      <div class="col">
+        <% page.attributes.each do |attribute| -%>
+          <div class="field-unit field-unit--<%= attribute.html_class %>">
+            <%= render_field attribute, f: f %>
+          </div>
+        <% end -%>
+        <div class="form-actions">
+          <%= f.submit "Actualizar factura", :class => 'btn btn-primary' %>
         </div>
-      <% end -%>
-
-      <div class="form-actions">
-        <%= f.submit "Actualizar factura", :class => 'btn btn-primary' %>
       </div>
     </div>
+  </div>
 <% end %>

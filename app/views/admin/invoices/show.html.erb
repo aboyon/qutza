@@ -58,13 +58,39 @@ as well as a link to its edit page.
           <thead>
             <tr>
               <th>Contepto</th>
-              <th>Monto</th>
+              <th>Monto Facturado</th>
+              <th>Monto Recibido</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><%= page.resource.description %></td>
               <td>$<%= page.resource.amount %></td>
+              <td>$<%= page.resource.amount_paid %></td>
+            </tr>
+            <%- if page.resource.invoice_discounts.any? %>
+              <tr>
+                <td class="text-right"><b>Deducciones/comisiones/descuentos</b></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <%- page.resource.invoice_discounts.each do |invoice_discount| %>
+              <tr>
+                <td class="text-right">
+                  <span class="badge badge-info">
+                    <%= t("helpers.label.discount.discount_type_#{invoice_discount.discount.discount_type}") %>
+                  </span>
+                  <%= invoice_discount.discount.name %>
+                </td>
+                <td>&nbsp;</td>
+                <td>-$<%= invoice_discount.amount %></td>
+              </tr>
+              <%- end %>
+            <%- end %>
+            <tr>
+              <td>Neto</td>
+              <td>&nbsp;</td>
+              <td>$<%= page.resource.profit %></td>
             </tr>
           </tbody>
         </table>

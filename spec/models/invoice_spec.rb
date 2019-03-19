@@ -36,4 +36,23 @@ describe Invoice, type: :model do
 
     it { expect(subject.period).to eq('2019/03') }
   end
+
+  describe "#profit" do
+    before do
+      subject.customer = create(:customer, :crossfiter_x2)
+      subject.amount_paid = 500.0
+      subject.save
+      subject.discounts << discount
+    end
+
+    context "discount is percentage" do
+      let(:discount) { create(:discount, :percentage) }
+      it { expect(subject.profit).to eq(250.0) }
+    end
+
+    context "discount is fixed amount" do
+      let(:discount) { create(:discount, :amount) }
+      it { expect(subject.profit).to eq(490.0) }
+    end
+  end
 end

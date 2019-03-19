@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :activities, :except => [:destroy]
     resources :invoices, :except => [:new, :create, :destroy], :controller => 'invoices'
     resources :customer_accesses, :only => [:index]
+    resources :discounts, :except => [:destroy]
     get '/', :to => "customers#index", :format => 'html'
   end
   resources :access, :only => [:index, :create]

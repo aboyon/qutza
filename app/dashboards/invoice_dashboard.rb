@@ -23,6 +23,7 @@ class InvoiceDashboard < Administrate::BaseDashboard
     client_name: Field::String.with_options(searchable: false),
     due_date: Field::DateTime.with_options(format: '%Y-%m-%d'),
     period: Field::String.with_options(searchable: false),
+    discounts: Field::HasMany
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -62,6 +63,7 @@ class InvoiceDashboard < Administrate::BaseDashboard
     :status,
     :payment_receipt,
     :amount_paid,
+    :discounts
   ].freeze
 
   # Overwrite this method to customize how invoices are displayed

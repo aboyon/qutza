@@ -1,11 +1,9 @@
 module Admin
   class CustomersController < Admin::ApplicationController
+    include Concerns::Admin::Common
 
-    before_action :resource, :except => [:index, :new, :create]
-
-    def index
-      super
-      @resources = Customer.page(params[:page]).per(10)
+    def scoped_resource
+      resource_class.order('name ASC')
     end
 
     def activities
@@ -39,10 +37,6 @@ module Admin
     end
 
     private
-
-      def resource
-        @resource ||= find_resource(params[:id])
-      end
 
       def activity_parameters
         params.require(:user).permit(:activity => [])

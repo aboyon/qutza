@@ -55,8 +55,20 @@ es:
           pending: "Impago"
         show:
           header: "Factura %{name}"
+      discount:
+        discount_type:
+          percentage: "Porcentaje del total"
+          amount: "Monto Fijo"
   helpers:
     label:
+      discount:
+        value: "Valor"
+        name: "Comisiones"
+        code: "Codigo"
+        discount_type: "Tipo de comision"
+        discount_type_amount: "Monto fijo"
+        discount_type_percentage: "Porcentaje del total"
+        index_title: "Listado de comisiones"
       invoice:
         index_title: "Facturacion"
         invoice_uid: "Numero de factura"
@@ -67,6 +79,7 @@ es:
         amount_paid: "Monto pagado"
         due_date: "Fecha Vencimiento"
         period: "Periodo"
+        discounts: "Comisiones/Descuentos"
       customer_access:
         index_title: "Acceso de clientes"
         customer: "Cliente"
@@ -102,6 +115,7 @@ es:
             email:
               blank: "El email es obligatorio"
               taken: "Esta direccion de email ya existe para otro cliente"
+              invalid: "El email ingresado no es valido."
         user:
           attributes:
             password_confirmation:

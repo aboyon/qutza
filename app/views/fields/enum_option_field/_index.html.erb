@@ -1,1 +1,13 @@
-<%= field.to_s %>
+<%= case field.to_s
+    when 'paid'
+      raw '<span class="badge badge-success">Pagado</span>'
+    when 'pending'
+      raw '<span class="badge badge-warning">Pendiente</span>'
+    when 'percentage'
+      raw '<span class="badge badge-info">Porcentaje</span>'
+    when 'amount'
+      raw '<span class="badge badge-secondary">Monto fijo</span>'
+    else
+      raw "#{field.to_s}"
+    end
+%>

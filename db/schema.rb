@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_041217) do
+ActiveRecord::Schema.define(version: 2019_03_18_205322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,30 @@ ActiveRecord::Schema.define(version: 2019_03_13_041217) do
     t.index ["joined_at"], name: "index_customers_on_joined_at"
     t.index ["name"], name: "index_customers_on_name"
     t.index ["person_identifable_nbr"], name: "index_customers_on_person_identifable_nbr", unique: true
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string "discount_type", default: "amount", null: false
+    t.float "value", null: false
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_discounts_on_code", unique: true
+    t.index ["name"], name: "index_discounts_on_name"
+  end
+
+  create_table "invoice_discounts", force: :cascade do |t|
+    t.bigint "invoice_id"
+    t.bigint "discount_id"
+    t.float "amount", null: false
+    t.string "notes"
+    t.datetime "paid_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discount_id"], name: "index_invoice_discounts_on_discount_id"
+    t.index ["invoice_id", "discount_id"], name: "index_invoice_discounts_on_invoice_id_and_discount_id", unique: true
+    t.index ["invoice_id"], name: "index_invoice_discounts_on_invoice_id"
   end
 
   create_table "invoices", force: :cascade do |t|

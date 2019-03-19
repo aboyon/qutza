@@ -15,12 +15,19 @@ as defined by the routes in the `admin/` namespace
     <li class="nav-item">
       <a class="nav-link" href="<%= admin_activities_path %>">Actividades</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="<%= admin_invoices_path %>">Facturacion</a>
-    </li>
+    <% if current_user.admin? %>
+      <li class="nav-item">
+        <a class="nav-link" href="<%= admin_invoices_path %>">Facturacion</a>
+      </li>
+    <% end %>
     <li class="nav-item">
       <a class="nav-link" href="<%= admin_customer_accesses_path %>">Accesos</a>
     </li>
+    <% if current_user.admin? %>
+      <li class="nav-item">
+        <a class="nav-link" href="<%= admin_discounts_path %>">Comisiones</a>
+      </li>
+    <% end %>
   </ul>
 </nav>
 <% end %>
