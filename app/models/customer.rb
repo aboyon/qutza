@@ -8,6 +8,7 @@ class Customer < ApplicationRecord
   scope :active, -> { where(:active => true) }
 
   validates :email, :presence => true, :format => { with: URI::MailTo::EMAIL_REGEXP }
+  validates_uniqueness_of :email, :person_identifable_nbr
 
   def overdue?
     invoices

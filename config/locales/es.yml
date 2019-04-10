@@ -32,6 +32,8 @@
 es:
   hello: "Holiiisssss"
   administrate:
+    form:
+      errors: "Encontramos errores que no hicieron posible guardar la informacion"
     search:
       label: "Buscar en listado (presione enter)"
     actions:
@@ -115,7 +117,9 @@ es:
             email:
               blank: "El email es obligatorio"
               taken: "Esta direccion de email ya existe para otro cliente"
-              invalid: "El email ingresado no es valido."
+              invalid: "El email no es valido."
+            person_identifable_nbr:
+              taken: "Este DNI ya existe para otro usuario"
         user:
           attributes:
             password_confirmation:

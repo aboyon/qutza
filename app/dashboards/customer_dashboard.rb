@@ -10,7 +10,7 @@ class CustomerDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     name: Field::String,
-    person_identifable_nbr: Field::Number,
+    person_identifable_nbr: Field::String,
     email: EmailField,
     joined_at: Field::DateTime,
     created_at: Field::DateTime,
