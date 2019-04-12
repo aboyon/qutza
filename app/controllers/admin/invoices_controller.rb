@@ -11,7 +11,8 @@ module Admin
 
     def scoped_resource
       query = resource_class.order('created_at DESC')
-      query = query.in_period(Date.parse("#{params[:period]}-01")) if params[:period].present?
+      period = (params[:period].present?) ? Date.parse("#{params[:period]}-01") : Date.today
+      query = query.in_period(period)
       query = query.paid if params[:paid_only] == 'y'
       query
     end

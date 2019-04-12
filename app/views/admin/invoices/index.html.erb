@@ -67,15 +67,16 @@ It renders the `_table` partial to display details about the resources.
           <% if resources.any? %>
             <table class="table table-sm">
               <tr>
-                <td class="text-right"><%= (params[:period].present?) ? "Total cobrado en periodo":"Total" %></td>
+                <td><b><%= resources.first.period %></b></td>
+                <td class="text-right">Total</td>
                 <td class="text-right"><b>$<%= @total_collected %></b></td>
               </tr>
               <tr>
-                <td class="text-right">Total estimado cobrar:</td>
+                <td class="text-right" colspan="2">Total estimado cobrar:</td>
                 <td class="text-right"><b>$<%= @total_estimated %></b></td>
               </tr>
               <tr class="<%= (@balance < 0) ? 'table-danger':'table-success' %>">
-                <td class="text-right">A cobrar:</td>
+                <td class="text-right" colspan="2">A cobrar:</td>
                 <td class="text-right"><b>$<%= @balance %></b></td>
               </tr>
             </table>
