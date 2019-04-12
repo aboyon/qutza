@@ -103,6 +103,13 @@ es:
         name: "Nombre de actividad"
         price: "Precio"
         active: "Activo?"
+  views:
+    pagination:
+      previous: 'Anterior'
+      next: 'Siguiente'
+      last: 'Ultima'
+      truncate: '...'
+      first: 'Primera'
   activerecord:
     errors:
       messages:

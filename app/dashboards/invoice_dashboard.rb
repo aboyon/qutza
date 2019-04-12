@@ -37,7 +37,6 @@ class InvoiceDashboard < Administrate::BaseDashboard
     :status,
     :payment_receipt,
     :description,
-    :due_date,
     :period
   ].freeze
 
