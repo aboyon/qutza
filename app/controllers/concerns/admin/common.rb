@@ -5,6 +5,11 @@ module Concerns
 
       included do
         before_action :resource, :except => [:index, :new, :create]
+        helper_method :subject
+      end
+
+      def subject
+        resource
       end
 
       protected
@@ -12,6 +17,8 @@ module Concerns
         def resource
           @resource ||= find_resource(params[:id])
         end
+
+
     end
   end
 end

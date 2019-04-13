@@ -9,5 +9,6 @@ module Admin
       @access_in_last_period = resource.access_in_period(Date.today.last_month)
       super
     end
+
   end
 end

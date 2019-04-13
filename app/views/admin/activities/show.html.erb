@@ -36,5 +36,20 @@
         </ul>
       </div>
     </div>
+    <% if subject.customers.any? %>
+      <h3>Socios</h3>
+      <div class="row">
+        <div class="col-12">
+          <ul class="list-group">
+            <% subject.customers.order('name ASC').each do |customer| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="<%= admin_customer_path(customer) %>"><%= customer.name %></a>
+                <span class="badge badge-<%= (!customer.medical_approval?)? 'danger':'success'%> badge-pill"><%= (!customer.medical_approval?) ? "No presento apto medico." : "Apto medico al dia." %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
   </div>
 </section>
